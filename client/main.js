@@ -1,4 +1,5 @@
 import { Template } from 'meteor/templating';
+import brain from 'brain.js';
 
 import './main.html';
 

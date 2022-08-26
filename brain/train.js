@@ -16,7 +16,7 @@ const options = {
 };
 
 // create a simple recurrent neural network
-const net = new brain.recurrent.LSTM(options);
+const net = new brain.recurrent.LSTM({});
 
 let intentsFile = fs.readFileSync('intents.json');
 let intents = JSON.parse(intentsFile);
@@ -40,3 +40,5 @@ net.train(netTrainData);
 // Save network state to JSON file.
 const netState = net.toJSON();
 fs.writeFileSync("trained-data.json",  JSON.stringify(netState), "utf-8");
+
+console.log('saved!');

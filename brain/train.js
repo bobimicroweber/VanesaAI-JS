@@ -12,16 +12,22 @@ const config = {
 };
 
 // create a simple recurrent neural network
-const net = new brain.recurrent.LSTM(config);
+const net = new brain.recurrent.LSTM({});
 
 let intentsFile = fs.readFileSync('intents.json');
 let intents = JSON.parse(intentsFile);
 
 let netTrainData = [];
 intents['intents'].forEach(element => {
-    netTrainData.push({
-        input: element.patterns,
-        output: element.responses,
+
+    element.patterns.forEach(function(pattern, i) {
+        if (!element.responses[i]) {
+            return;
+        }
+        netTrainData.push({
+            input: pattern,
+            output: element.responses[i],
+        });
     });
 });
 

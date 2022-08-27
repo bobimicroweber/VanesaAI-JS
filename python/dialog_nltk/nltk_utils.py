@@ -1,9 +1,11 @@
 import numpy as np
 import nltk
 import os
-chatbotFolder = os.path.dirname(os.path.abspath(__file__))
-nltk.data.path.append(chatbotFolder)
-nltk.download('punkt')
+
+#chatbotFolder = os.path.dirname(os.path.abspath(__file__))
+#nltk.data.path.append(chatbotFolder)
+#nltk.download('punkt')
+
 from nltk.stem.porter import PorterStemmer
 stemmer = PorterStemmer()
 

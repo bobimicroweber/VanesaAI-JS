@@ -34,9 +34,9 @@ all_words = [stem(w) for w in all_words if w not in ignore_words]
 all_words = sorted(set(all_words))
 tags = sorted(set(tags))
 
-print(len(xy), "patterns")
-print(len(tags), "tags:", tags)
-print(len(all_words), "unique stemmed words:", all_words)
+#print(len(xy), "patterns")
+#print(len(tags), "tags:", tags)
+#print(len(all_words), "unique stemmed words:", all_words)
 
 # create training data
 X_train = []
@@ -61,7 +61,6 @@ hidden_size = 8
 output_size = len(tags)
 print(input_size, output_size)
 
-
 class ChatDataset(Dataset):
 
     def __init__(self):
@@ -79,9 +78,7 @@ class ChatDataset(Dataset):
 
 
 dataset = ChatDataset()
-train_loader = DataLoader(dataset=dataset,
-                          batch_size=batch_size,
-                          shuffle=True)
+train_loader = DataLoader(dataset=dataset, batch_size=batch_size, shuffle=True)
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 

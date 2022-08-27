@@ -1,5 +1,4 @@
 import numpy as np
-import random
 import json
 
 import torch
@@ -62,6 +61,7 @@ hidden_size = 8
 output_size = len(tags)
 print(input_size, output_size)
 
+
 class ChatDataset(Dataset):
 
     def __init__(self):
@@ -77,11 +77,11 @@ class ChatDataset(Dataset):
     def __len__(self):
         return self.n_samples
 
+
 dataset = ChatDataset()
 train_loader = DataLoader(dataset=dataset,
                           batch_size=batch_size,
-                          shuffle=True,
-                          num_workers=2)
+                          shuffle=True)
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -95,7 +95,8 @@ optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 for epoch in range(num_epochs):
     for (words, labels) in train_loader:
         words = words.to(device)
-        labels = labels.to(device)
+        labels = labels.to(dtype=torch.long).to(device)
+        #labels = labels.to(device)
 
         # Forward pass
         outputs = model(words)
@@ -108,19 +109,18 @@ for epoch in range(num_epochs):
         loss.backward()
         optimizer.step()
 
-    if (epoch+1) % 100 == 0:
-        print (f'Epoch [{epoch+1}/{num_epochs}], Loss: {loss.item():.4f}')
-
+    if (epoch + 1) % 100 == 0:
+        print(f'Epoch [{epoch + 1}/{num_epochs}], Loss: {loss.item():.4f}')
 
 print(f'final loss: {loss.item():.4f}')
 
 data = {
-"model_state": model.state_dict(),
-"input_size": input_size,
-"hidden_size": hidden_size,
-"output_size": output_size,
-"all_words": all_words,
-"tags": tags
+    "model_state": model.state_dict(),
+    "input_size": input_size,
+    "hidden_size": hidden_size,
+    "output_size": output_size,
+    "all_words": all_words,
+    "tags": tags
 }
 
 FILE = "data.pth"
